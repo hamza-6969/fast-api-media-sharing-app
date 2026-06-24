@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from contextlib import asynccontextmanager
 from sqlalchemy import select
 from app.images import imagekit
-from imagekitio.models.UploadFileRequestOptions import UploadFileRequestOptions
+from imagekitio import UploadFileRequestOptions
 import shutil
 import os
 import uuid
@@ -42,11 +42,11 @@ async def upload_file(
         
         upload_result = imagekit.upload_file(
             file = open(temp_file_path,"rb"),
-            file_name = file.name 
+            file_name = file.name, 
             options = UploadFileRequestOptions(
-                use_unique_file_name = True
+                use_unique_file_name = True,
                 tags = ["BackEnd_Upload"]
-            )
+            ),
         )
 
         if upload_result.response_metadata.http_status_code == 200 :
